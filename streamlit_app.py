@@ -7,8 +7,8 @@ import pickle
 
 # Load models (replace with the actual paths to your trained models)
 #fraud_model = joblib.load('E:/Sem Project/Codes/fraud_dt.pkl')
-credit_model = joblib.load('E:/Sem Project/Codes/credit.pkl')
-loan_model = joblib.load('E:/Sem Project/Codes/loan.pkl')
+credit_model = joblib.load('credit.pkl')
+loan_model = joblib.load('loan.pkl')
 
 # Set up page configuration
 st.set_page_config(
