@@ -7,39 +7,7 @@ import pickle
 import requests
 import os
 
-# Google Drive File ID
-file_id = "1CVuThI-cKrR0_XhzkMkPNZGmYjxmfsKE"
 
-# Construct direct download URL
-download_url = f"https://drive.google.com/uc?id={file_id}"
-
-# Output file path
-output_path = "credit.pkl"
-
-# Check if the file already exists
-if not os.path.exists(output_path):
-    st.info("Downloading the model file. Please wait...")
-    try:
-        response = requests.get(download_url, stream=True)
-        response.raise_for_status()  # Check for HTTP errors
-
-        # Write file to disk
-        with open(output_path, "wb") as f:
-            for chunk in response.iter_content(chunk_size=8192):
-                if chunk:
-                    f.write(chunk)
-        st.success("Model file downloaded successfully!")
-    except requests.exceptions.RequestException as e:
-        st.error(f"Failed to download the file: {e}")
-else:
-    st.info("Model file already exists.")
-
-
-
-# Load models (replace with the actual paths to your trained models)
-#fraud_model = joblib.load('E:/Sem Project/Codes/fraud_dt.pkl')
-credit_model = joblib.load('credit.pkl')
-#loan_model = joblib.load('loan.pkl')
 
 
 # Set up page configuration
@@ -49,6 +17,7 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
+
 
 option = st.sidebar.selectbox(
     'Navigate',
@@ -267,6 +236,41 @@ st.markdown("""
     }
     </style>
     """, unsafe_allow_html=True)
+# Google Drive File ID
+file_id = "1CVuThI-cKrR0_XhzkMkPNZGmYjxmfsKE"
+
+# Construct direct download URL
+download_url = f"https://drive.google.com/uc?id={file_id}"
+
+# Output file path
+output_path = "credit.pkl"
+
+# Check if the file already exists
+if not os.path.exists(output_path):
+    st.info("Downloading the model file. Please wait...")
+    try:
+        response = requests.get(download_url, stream=True)
+        response.raise_for_status()  # Check for HTTP errors
+
+        # Write file to disk
+        with open(output_path, "wb") as f:
+            for chunk in response.iter_content(chunk_size=8192):
+                if chunk:
+                    f.write(chunk)
+        st.success("Model file downloaded successfully!")
+    except requests.exceptions.RequestException as e:
+        st.error(f"Failed to download the file: {e}")
+else:
+    st.info("Model file already exists.")
+
+
+
+# Load models (replace with the actual paths to your trained models)
+#fraud_model = joblib.load('E:/Sem Project/Codes/fraud_dt.pkl')
+credit_model = joblib.load('credit.pkl')
+#loan_model = joblib.load('loan.pkl')
+
+
 
 
 # Add the cf function here
