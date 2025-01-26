@@ -280,7 +280,7 @@ if option == "🏠 Home":
 
     st.markdown("""
     <div class="service-card">
-        <h2>Why Choose Finance Wise?</h2>
+        <h2>Why Choose WiseLFC?</h2>
         <ul>
             <li>Advanced AI-powered analysis</li>
             <li>Instant results and predictions</li>
