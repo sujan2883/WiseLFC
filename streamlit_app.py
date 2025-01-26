@@ -419,7 +419,7 @@ elif option == "🏦 Loan Prediction":
                 'Property_Area_Semiurban', 'Property_Area_Urban']
         
         input_df = pd.DataFrame([input_data], columns=columns)
-        prediction = loan_model.predict(input_df)
+        #prediction = loan_model.predict(input_df)
 
         # Enhanced loan eligibility decision with detailed feedback
         if EMI < Total_Income * 3:
