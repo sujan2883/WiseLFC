@@ -254,7 +254,7 @@ def download_file(file_id, output_path):
 # File IDs and their corresponding paths
 files_to_download = {
     "1CVuThI-cKrR0_XhzkMkPNZGmYjxmfsKE": "credit.pkl",
-    "1uIxhRVgemttXOWf2_OGwTUcDbh80Mjkc": "fraud.pkl",
+    "14jCm6mOxC3WAvB6YgRP2FHmZmxie7kC_": "fraud.pkl",
     "1ITS3ajJSntgHfowfYPTR2n8h07U4YUFj": "loan.pkl",
 }
 
@@ -263,7 +263,7 @@ for file_id, output_path in files_to_download.items():
     download_file(file_id, output_path)
 
 
-fraud_model = joblib.load('fraud_dt.pkl')
+fraud_model = joblib.load('fraud.pkl')
 credit_model = joblib.load('credit.pkl')
 loan_model = joblib.load('loan.pkl')
 
