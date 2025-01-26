@@ -1,6 +1,7 @@
 streamlit
 joblib
 scikit-learn
+tensorflow
 keras
 xgboost
 gdown
