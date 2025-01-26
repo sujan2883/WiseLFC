@@ -4,11 +4,47 @@ import joblib
 import numpy as np
 import pandas as pd
 import pickle
+import gdown
+
+import gdown
+import os
+
+# Google Drive File ID
+file_id = "1CVuThI-cKrR0_XhzkMkPNZGmYjxmfsKE"
+
+# File download URL
+download_url = f"https://drive.google.com/uc?id={file_id}"
+
+# Output file path
+output_path = "credit.pkl"
+
+# Check if the file already exists to avoid redownloading
+if not os.path.exists(output_path):
+    st.info("Downloading the model file...")
+    gdown.download(download_url, output_path, quiet=False)
+    st.success("Download complete!")
+else:
+    st.info("Model file already exists.")
+
 
 # Load models (replace with the actual paths to your trained models)
 #fraud_model = joblib.load('E:/Sem Project/Codes/fraud_dt.pkl')
 credit_model = joblib.load('credit.pkl')
 #loan_model = joblib.load('loan.pkl')
+
+# Google Drive File ID
+file_id = "YOUR_FILE_ID_HERE"
+
+# File download URL
+download_url = f"https://drive.google.com/uc?id={file_id}"
+
+# Output file path
+output_path = "credit.pkl"
+
+# Download the file
+gdown.download(download_url, output_path, quiet=False)
+
+print("File downloaded successfully!")
 
 # Set up page configuration
 st.set_page_config(
