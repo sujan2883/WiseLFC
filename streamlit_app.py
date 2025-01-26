@@ -8,8 +8,6 @@ import requests
 import os
 
 
-
-
 # Set up page configuration
 st.set_page_config(
     page_title="WiseLFC",
@@ -238,6 +236,8 @@ st.markdown("""
     """, unsafe_allow_html=True)
 # Google Drive File ID
 file_id = "1CVuThI-cKrR0_XhzkMkPNZGmYjxmfsKE"
+file_id1 = "1uIxhRVgemttXOWf2_OGwTUcDbh80Mjkc"
+fileid2 = "1ITS3ajJSntgHfowfYPTR2n8h07U4YUFj"
 
 # Construct direct download URL
 download_url = f"https://drive.google.com/uc?id={file_id}"
@@ -260,15 +260,58 @@ if not os.path.exists(output_path):
         st.success("Model file downloaded successfully!")
     except requests.exceptions.RequestException as e:
         st.error(f"Failed to download the file: {e}")
-else:
-    st.info("Model file already exists.")
+#else:
+#    st.info("Model file already exists.")
+
+download_url1 = f"https://drive.google.com/uc?id={file_id1}"
+
+# Output file path
+output_path1 = "fraud.pkl"
+
+# Check if the file already exists
+if not os.path.exists(output_path1):
+    st.info("Downloading the model file. Please wait...")
+    try:
+        response = requests.get(download_url1, stream=True)
+        response.raise_for_status()  # Check for HTTP errors
+
+        # Write file to disk
+        with open(output_path1, "wb") as f:
+            for chunk in response.iter_content(chunk_size=8192):
+                if chunk:
+                    f.write(chunk)
+        st.success("Model file downloaded successfully!")
+    except requests.exceptions.RequestException as e:
+        st.error(f"Failed to download the file: {e}")
+
+
+download_url2 = f"https://drive.google.com/uc?id={file_id2}"
+
+# Output file path
+output_path2 = "loan.pkl"
+
+# Check if the file already exists
+if not os.path.exists(output_path2):
+    st.info("Downloading the model file. Please wait...")
+    try:
+        response = requests.get(download_url2, stream=True)
+        response.raise_for_status()  # Check for HTTP errors
+
+        # Write file to disk
+        with open(output_path2, "wb") as f:
+            for chunk in response.iter_content(chunk_size=8192):
+                if chunk:
+                    f.write(chunk)
+        st.success("Model file downloaded successfully!")
+    except requests.exceptions.RequestException as e:
+        st.error(f"Failed to download the file: {e}")
 
 
 
-# Load models (replace with the actual paths to your trained models)
-#fraud_model = joblib.load('E:/Sem Project/Codes/fraud_dt.pkl')
+Load models (replace with the actual paths to your trained models)
+fraud_model = joblib.load('fraud_dt.pkl')
 credit_model = joblib.load('credit.pkl')
-#loan_model = joblib.load('loan.pkl')
+loan_model = joblib.load('loan.pkl')
 
 
 
@@ -419,7 +462,7 @@ elif option == "🏦 Loan Prediction":
                 'Property_Area_Semiurban', 'Property_Area_Urban']
         
         input_df = pd.DataFrame([input_data], columns=columns)
-        #prediction = loan_model.predict(input_df)
+        prediction = loan_model.predict(input_df)
 
         # Enhanced loan eligibility decision with detailed feedback
         if EMI < Total_Income * 3:
