@@ -235,77 +235,32 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 # Google Drive File ID
-file_id = "1CVuThI-cKrR0_XhzkMkPNZGmYjxmfsKE"
-file_id1 = "1uIxhRVgemttXOWf2_OGwTUcDbh80Mjkc"
-fileid2 = "1ITS3ajJSntgHfowfYPTR2n8h07U4YUFj"
+def download_file(file_id, output_path):
+    if not os.path.exists(output_path):  # Check if file already exists
+        download_url = f"https://drive.google.com/uc?id={file_id}"
+        try:
+            # Send request to download the file
+            response = requests.get(download_url, stream=True)
+            response.raise_for_status()  # Check for HTTP errors
 
-# Construct direct download URL
-download_url = f"https://drive.google.com/uc?id={file_id}"
+            # Write the file to disk
+            with open(output_path, "wb") as f:
+                for chunk in response.iter_content(chunk_size=8192):
+                    if chunk:
+                        f.write(chunk)
+        except requests.exceptions.RequestException:
+            pass  # Handle errors silently (no output)
 
-# Output file path
-output_path = "credit.pkl"
+# File IDs and their corresponding paths
+files_to_download = {
+    "1CVuThI-cKrR0_XhzkMkPNZGmYjxmfsKE": "credit.pkl",
+    "1uIxhRVgemttXOWf2_OGwTUcDbh80Mjkc": "fraud.pkl",
+    "1ITS3ajJSntgHfowfYPTR2n8h07U4YUFj": "loan.pkl",
+}
 
-# Check if the file already exists
-if not os.path.exists(output_path):
-    st.info("Downloading the model file. Please wait...")
-    try:
-        response = requests.get(download_url, stream=True)
-        response.raise_for_status()  # Check for HTTP errors
-
-        # Write file to disk
-        with open(output_path, "wb") as f:
-            for chunk in response.iter_content(chunk_size=8192):
-                if chunk:
-                    f.write(chunk)
-        st.success("Model file downloaded successfully!")
-    except requests.exceptions.RequestException as e:
-        st.error(f"Failed to download the file: {e}")
-#else:
-#    st.info("Model file already exists.")
-
-download_url1 = f"https://drive.google.com/uc?id={file_id1}"
-
-# Output file path
-output_path1 = "fraud.pkl"
-
-# Check if the file already exists
-if not os.path.exists(output_path1):
-    st.info("Downloading the model file. Please wait...")
-    try:
-        response = requests.get(download_url1, stream=True)
-        response.raise_for_status()  # Check for HTTP errors
-
-        # Write file to disk
-        with open(output_path1, "wb") as f:
-            for chunk in response.iter_content(chunk_size=8192):
-                if chunk:
-                    f.write(chunk)
-        st.success("Model file downloaded successfully!")
-    except requests.exceptions.RequestException as e:
-        st.error(f"Failed to download the file: {e}")
-
-
-download_url2 = f"https://drive.google.com/uc?id={file_id2}"
-
-# Output file path
-output_path2 = "loan.pkl"
-
-# Check if the file already exists
-if not os.path.exists(output_path2):
-    st.info("Downloading the model file. Please wait...")
-    try:
-        response = requests.get(download_url2, stream=True)
-        response.raise_for_status()  # Check for HTTP errors
-
-        # Write file to disk
-        with open(output_path2, "wb") as f:
-            for chunk in response.iter_content(chunk_size=8192):
-                if chunk:
-                    f.write(chunk)
-        st.success("Model file downloaded successfully!")
-    except requests.exceptions.RequestException as e:
-        st.error(f"Failed to download the file: {e}")
-
+# Download each file
+for file_id, output_path in files_to_download.items():
+    download_file(file_id, output_path)
 
 
 fraud_model = joblib.load('fraud_dt.pkl')
