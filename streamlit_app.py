@@ -41,19 +41,6 @@ else:
 credit_model = joblib.load('credit.pkl')
 #loan_model = joblib.load('loan.pkl')
 
-# Google Drive File ID
-file_id = "YOUR_FILE_ID_HERE"
-
-# File download URL
-download_url = f"https://drive.google.com/uc?id={file_id}"
-
-# Output file path
-output_path = "credit.pkl"
-
-# Download the file
-gdown.download(download_url, output_path, quiet=False)
-
-print("File downloaded successfully!")
 
 # Set up page configuration
 st.set_page_config(
