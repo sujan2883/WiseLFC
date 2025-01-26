@@ -308,12 +308,9 @@ if not os.path.exists(output_path2):
 
 
 
-Load models (replace with the actual paths to your trained models)
 fraud_model = joblib.load('fraud_dt.pkl')
 credit_model = joblib.load('credit.pkl')
 loan_model = joblib.load('loan.pkl')
-
-
 
 
 # Add the cf function here
