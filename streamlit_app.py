@@ -4,27 +4,36 @@ import joblib
 import numpy as np
 import pandas as pd
 import pickle
-import gdown
-
-import gdown
+import requests
 import os
 
 # Google Drive File ID
 file_id = "1CVuThI-cKrR0_XhzkMkPNZGmYjxmfsKE"
 
-# File download URL
+# Construct direct download URL
 download_url = f"https://drive.google.com/uc?id={file_id}"
 
 # Output file path
 output_path = "credit.pkl"
 
-# Check if the file already exists to avoid redownloading
+# Check if the file already exists
 if not os.path.exists(output_path):
-    st.info("Downloading the model file...")
-    gdown.download(download_url, output_path, quiet=False)
-    st.success("Download complete!")
+    st.info("Downloading the model file. Please wait...")
+    try:
+        response = requests.get(download_url, stream=True)
+        response.raise_for_status()  # Check for HTTP errors
+
+        # Write file to disk
+        with open(output_path, "wb") as f:
+            for chunk in response.iter_content(chunk_size=8192):
+                if chunk:
+                    f.write(chunk)
+        st.success("Model file downloaded successfully!")
+    except requests.exceptions.RequestException as e:
+        st.error(f"Failed to download the file: {e}")
 else:
     st.info("Model file already exists.")
+
 
 
 # Load models (replace with the actual paths to your trained models)
